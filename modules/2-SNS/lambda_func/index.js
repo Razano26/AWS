@@ -3,7 +3,8 @@ const sns = new AWS.SNS();
 
 exports.handler = async (event) => {
 	const instanceId = JSON.parse(event).instance_id; // Récupération de l'ID de l'instance depuis l'événement
-	const message = `L'instance EC2 ${instanceId} a bien démarré.`; // Message personnalisé incluant l'ID de l'instance
+	const ip = JSON.parse(event).ip_address; // Récupération de l'IP de l'instance depuis l'événement
+	const message = `L'instance EC2 ${instanceId} a bien démarré sont ip est : ${ip}.`; // Message personnalisé incluant l'ID de l'instance
 
 	const params = {
 		Message: message,
