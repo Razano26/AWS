@@ -18,9 +18,8 @@ resource "aws_cloudwatch_event_target" "invoke_lambda" {
   input_transformer {
     input_paths = {
       instance-id = "$.detail.instance-id"
-      ip-address  = "$.detail.ip-address"
     }
-    input_template = "\"{\\\"instance_id\\\":\\\"<instance-id>\\\", \\\"ip_address\\\":\\\"<ip-address>\\\"}\""
+    input_template = "\"{\\\"instance_id\\\":\\\"<instance-id>\\\"}\""
   }
 }
 

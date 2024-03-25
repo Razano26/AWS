@@ -1,10 +1,20 @@
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS();
+const ec2 = new AWS.EC2();
 
 exports.handler = async (event) => {
-	const instanceId = JSON.parse(event).instance_id; // Récupération de l'ID de l'instance depuis l'événement
-	const ip = JSON.parse(event).ip_address; // Récupération de l'IP de l'instance depuis l'événement
-	const message = `L'instance EC2 ${instanceId} a bien démarré sont ip est : ${ip}.`; // Message personnalisé incluant l'ID de l'instance
+	
+	const instanceId = JSON.parse(event).instance_id;
+
+	const paramsIP = {
+		InstanceIds: [instanceId],
+	};
+
+	const data = await ec2.describeInstances(paramsIP).promise();
+	const instance = data.Reservations[0].Instances[0];
+	const ipAddress = instance.PublicIpAddress;
+
+	const message = `L'instance EC2 ${instanceId} a bien démarré sont ip est : ${ipAddress}.`;
 
 	const params = {
 		Message: message,
