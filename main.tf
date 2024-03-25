@@ -1,6 +1,7 @@
 module "ec2" {
   source        = "./modules/1-EC2"
   ec2_instances = var.ec2_instances
+  depends_on = [ module.sns, module.cloudwatch, module.prevent_mistake ]
 }
 
 module "sns" {
