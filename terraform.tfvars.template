@@ -1,0 +1,7 @@
+ec2_instances = [
+  {
+    name               = "instance1"
+    instance_type      = "t3.nano"
+    user_data          = "echo Hello World"
+  }
+]
