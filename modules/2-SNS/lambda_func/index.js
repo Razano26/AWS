@@ -2,8 +2,11 @@ const AWS = require('aws-sdk');
 const sns = new AWS.SNS();
 
 exports.handler = async (event) => {
+	const instanceId = JSON.parse(event).instance_id; // Récupération de l'ID de l'instance depuis l'événement
+	const message = `L'instance EC2 ${instanceId} a bien démarré.`; // Message personnalisé incluant l'ID de l'instance
+
 	const params = {
-		Message: process.env.NOTIFICATION_MESSAGE,
+		Message: message,
 		TopicArn: process.env.SNS_TOPIC_ARN,
 	};
 

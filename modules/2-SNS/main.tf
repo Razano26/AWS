@@ -16,13 +16,12 @@ resource "aws_lambda_function" "lambda_function" {
   handler = "index.handler"
   runtime = "nodejs20.x"
   role = var.lambda_role_arn
-  filename = "./modules/2-SNS/lambda_func.zip"
-  source_code_hash = filebase64sha256("./modules/2-SNS/lambda_func.zip")
+  filename = "${path.module}/lambda_func.zip"
+  source_code_hash = filebase64sha256("${path.module}/lambda_func.zip")
 
   environment {
     variables = {
-      LAMBDA_ARN     = aws_sns_topic.sns_topic.arn
-      LAMBDA_MESSAGE = var.sended_notification
+      SNS_TOPIC_ARN     = aws_sns_topic.sns_topic.arn
     }
   }
 }
