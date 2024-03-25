@@ -16,3 +16,7 @@ module "cloudwatch" {
   function_name = module.sns.lambda_function_name
   function_arn = module.sns.lambda_function_arn
 }
+
+module "prevent_mistake" {
+  source = "./modules/4-PreventMistake"
+}
