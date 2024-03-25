@@ -1,16 +1,10 @@
-# Fichier : variables.tf
-
-variable "instance_name" {
-  description = "Nom de l'instance EC2"
-  default = "DefaultInstanceName"
-}
-
-variable "instance_type" {
-  description = "Type de l'instance EC2"
-  default     = "t3.nano"
-}
-
-variable "user_data" {
-  description = "Données utilisateur pour l'instance EC2 (optionnel)"
-  default     = ""
+variable "ec2_instances" {
+  description = "A list of EC2 instances to create"
+  type = list(object({
+    name                = string
+    instance_type       = optional(string, "t3.nano")
+    user_data           = optional(string, null)
+    instance_role_name  = optional(string, null)
+   }))
+  default = []
 }
