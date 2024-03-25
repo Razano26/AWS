@@ -29,4 +29,4 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_instance_ids"></a> [instance\_ids](#output\_instance\_ids) | n/a |
+| <a name="output_instance_ids"></a> [instance\_ids](#output\_instance\_ids) | Ids of the EC2 instances |
