@@ -10,7 +10,7 @@ resource "aws_iam_role" "lambda_execution_role" {
           Service = "lambda.amazonaws.com"
         }
         Effect = "Allow"
-        Sid = ""
+        Sid    = ""
       },
     ]
   })
@@ -31,7 +31,7 @@ resource "aws_iam_role_policy" "lambda_policy" {
           "logs:PutLogEvents"
         ]
         Resource = "*"
-        Effect = "Allow"
+        Effect   = "Allow"
       },
     ]
   })
@@ -40,10 +40,10 @@ resource "aws_iam_role_policy" "lambda_policy" {
 resource "aws_lambda_function" "lambda_function" {
   function_name = "my_ec2_watcher_lambda"
 
-  filename      = "${path.module}/lambda_func.zip"
-  handler       = "index.handler"
-  runtime       = "nodejs20.x"
-  role          = aws_iam_role.lambda_execution_role.arn
+  filename = "${path.module}/lambda_func.zip"
+  handler  = "index.handler"
+  runtime  = "nodejs20.x"
+  role     = aws_iam_role.lambda_execution_role.arn
 
   source_code_hash = filebase64sha256("${path.module}/lambda_func.zip")
 }
@@ -61,15 +61,15 @@ resource "aws_cloudwatch_event_rule" "ec2_launch_rule" {
   description = "Triggers on EC2 launch"
 
   event_pattern = jsonencode({
-    source: ["aws.ec2"],
-    "detail-type": ["EC2 Instance State-change Notification"],
-    detail: { state: ["running"] }
+    source : ["aws.ec2"],
+    "detail-type" : ["EC2 Instance State-change Notification"],
+    detail : { state : ["running"] }
   })
 }
 
 resource "aws_cloudwatch_event_target" "event_target" {
-  rule      = aws_cloudwatch_event_rule.ec2_launch_rule.name
-  arn       = aws_lambda_function.lambda_function.arn
+  rule = aws_cloudwatch_event_rule.ec2_launch_rule.name
+  arn  = aws_lambda_function.lambda_function.arn
 }
 
 resource "aws_cloudwatch_metric_alarm" "too_many_instances" {
